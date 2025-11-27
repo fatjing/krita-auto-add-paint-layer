@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=Krita/PythonPlugin
+X-KDE-Library=auto_add_paint_layer
+X-Python-2-Compatible=false
+X-Krita-Manual=Manual.html
+Name=Auto Add Paint Layer
+Comment=Automatically adds a paint layer if only a background exists on open
