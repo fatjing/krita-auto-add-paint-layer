@@ -4,7 +4,7 @@ class AutoAddPaintLayer(Extension):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.win = None
+        self.wins = []
 
     # Krita.instance() exists, so do any setup work
     def setup(self):
@@ -12,8 +12,13 @@ class AutoAddPaintLayer(Extension):
         notifier.windowCreated.connect(self.onWindowCreated)
 
     def onWindowCreated(self):
-        self.win = Krita.instance().activeWindow()
-        self.win.activeViewChanged.connect(self.addPaintLayer)
+        win = Krita.instance().activeWindow()
+        win.activeViewChanged.connect(self.addPaintLayer)
+        win.windowClosed.connect(self.onWindowClosed)
+        self.wins.append(win)
+
+    def onWindowClosed(self):
+        self.wins = [win for win in self.wins if win is not None]
 
     def addPaintLayer(self):
         doc = Krita.instance().activeDocument()
